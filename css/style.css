@@ -1,0 +1,14 @@
+.summary {
+  text-align: center;
+}
+
+.header {
+  background-color: #49970e;
+  border-radius: 25px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+.header p {
+  margin: 10px;
+}
