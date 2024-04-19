@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -138,6 +139,8 @@ def get_episode_lines(website_content: BeautifulSoup, season: int, episode: int,
 
 if __name__ == '__main__':
     OUT_PATH = Path(r"..\data\transcripts.csv")
+    # minimum number of lines for a character to be included (other characters will be renamed to "Other")
+    MIN_LINES = 50
     episode_list_doc = req.get("https://she-raandtheprincessesofpower.fandom.com/wiki/Episode_Transcript_List")
     substitutions_df = pd.read_csv(Path(r"..\data\substitutions.csv"))
     list_soup = BeautifulSoup(episode_list_doc.content, 'html.parser')
@@ -175,5 +178,15 @@ if __name__ == '__main__':
 
 
     dataframe = pd.concat(dataframes, axis=0)
+
+    character_line_counts = defaultdict(int)
+    for i,row in dataframe.iterrows():
+        character_line_counts[row['character']] += 1
+
+    # get all characters that need to be renamed
+    to_rename = [key for key, val in character_line_counts.items() if val < MIN_LINES]
+
+    # rename all characters in that list
+    dataframe.loc[dataframe['character'].isin(to_rename), 'character'] = 'Other'
 
     dataframe.to_csv(OUT_PATH, index=False)
