@@ -1,5 +1,5 @@
 class BarchartCustomizable {
-    constructor(_config, _data, _column, _dispatcher, _displayString) {
+    constructor(_config, _data, _column, _displayString) {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 710,
@@ -10,7 +10,6 @@ class BarchartCustomizable {
         }
         this.data = _data;
         this.column = _column;
-        this.dispatcher = _dispatcher;
         this.displayString = _displayString;
         this.initVis();
     }
@@ -18,6 +17,7 @@ class BarchartCustomizable {
     initVis() {
         let vis = this;
 
+        console.log(vis.data)
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
 
@@ -53,23 +53,6 @@ class BarchartCustomizable {
         vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis');
 
-        // Initialize the brush
-        vis.brush = d3.brushX()
-            .extent([[0, 0], [vis.width, vis.height]])
-            .on('brush', function ({ selection }) {
-                if (selection) vis.BrushMoved(selection);
-            })
-            .on('end', function ({ selection }) {
-                if (!selection) vis.Brushed(null);
-            });
-
-        // Append the brush to the chart
-        vis.brushG = vis.chart.append("g")
-            .attr("class", "brush")
-            .call(vis.brush);
-
-        vis.brushTimer = null;
-
         var margin = { top: 20, right: 30, bottom: 50, left: 30 }
 
         vis.svg.append("text")
@@ -85,7 +68,7 @@ class BarchartCustomizable {
 
         // Set the scale input domains
         vis.xScale.domain(vis.data.map(d => d[vis.column]));
-        vis.yScale.domain([0, d3.max(vis.data, d => d.frequency)]);
+        vis.yScale.domain([0, d3.max(vis.data, d => d.lines)]);
 
         vis.renderVis();
     }
@@ -100,20 +83,18 @@ class BarchartCustomizable {
             .attr('class', 'bar')
             .attr('x', d => vis.xScale(d[vis.column]))
             .attr('width', vis.xScale.bandwidth())
-            .attr('y', d => vis.yScale(d.frequency))
-            .attr('height', d => vis.height - vis.yScale(d.frequency))
-            .style('fill', 'steelblue') // Set the fill color to steel blue
+            .attr('y', d => vis.yScale(d.lines))
+            .attr('height', d => vis.height - vis.yScale(d.lines))
+            .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
-                // Show tooltip
                 d3.select('#tooltip')
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
                     .html(`<div class="tooltip-label">${vis.displayString}: ${d[vis.column]}<br>
-                    Frequency: ${d.frequency}</div>`);
+                    Lines: ${d.lines}</div>`);
             })
             .on('mouseleave', function () {
-                // Hide tooltip
                 d3.select('#tooltip').style('opacity', 0);
             });
 
@@ -122,63 +103,5 @@ class BarchartCustomizable {
             .attr('transform', 'rotate(-45)')
             .style('text-anchor', 'end');
         vis.yAxisG.call(vis.yAxis);
-    }
-
-    BrushMoved(selection) {
-        let vis = this;
-        clearTimeout(vis.brushTimer);
-
-        if (selection) {
-            vis.brushTimer = setTimeout(() => {
-                vis.Brushed(selection);
-            }, 300);
-        }
-    }
-
-    Brushed(selection) {
-        let vis = this;
-
-        clearTimeout(vis.brushTimer);
-
-        if (!selection) {
-            if (!vis.inReset) {
-                // If selection is null, reset the visualization and exit the method
-                vis.dispatcher.call('reset', vis.event);
-            }
-            return; // Exit the method early
-        }
-        vis.dispatcher.call('resetData', vis.event, vis.config.parentElement);
-
-        const selectionStart = selection[0];
-        const selectionEnd = selection[1];
-
-        const selectedData = vis.data.filter(d => {
-            const barX = vis.xScale(d[vis.column]);
-            const barWidth = vis.xScale.bandwidth();
-            return barX + barWidth > selection[0] && barX < selection[1];
-        });
-
-        // Dispatch the selected data
-        vis.dispatcher.call('filterVisualizations', vis.event, selectedData, vis.config.parentElement);
-
-        // Reset all bars to their original color
-        vis.chart.selectAll('.bar')
-            .style('fill', 'steelblue');
-
-        // Change the color of bars within the selection
-        vis.chart.selectAll('.bar')
-            .filter(d => {
-                const barX = vis.xScale(d[vis.column]);
-                const barWidth = vis.xScale.bandwidth();
-                return barX + barWidth > selectionStart && barX < selectionEnd;
-            })
-            .style('fill', 'red');
-    }
-
-    resetBrush() {
-        this.inReset = true;
-        this.brush.move(this.brushG, null);
-        this.Brushed(null);
-        this.inReset = false;
     }
 }
