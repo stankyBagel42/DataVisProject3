@@ -1,4 +1,4 @@
-class BarchartCustomizable {
+class Barchart{
     constructor(_config, _data, _column, _displayString) {
         this.config = {
             parentElement: _config.parentElement,
@@ -66,7 +66,6 @@ class BarchartCustomizable {
     updateVis() {
         let vis = this;
 
-        // Set the scale input domains
         vis.xScale.domain(vis.data.map(d => d.character));
         vis.yScale.domain([0, d3.max(vis.data, d => d[vis.column])]);
 
@@ -76,7 +75,6 @@ class BarchartCustomizable {
     renderVis() {
         let vis = this;
 
-        // Add rectangles
         let bars = vis.chart.selectAll('.bar')
             .data(vis.data, d => d.character)
             .join('rect')
