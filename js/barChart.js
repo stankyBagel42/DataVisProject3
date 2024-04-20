@@ -87,12 +87,17 @@ class BarchartCustomizable {
             .attr('height', d => vis.height - vis.yScale(d[vis.column]))
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
+                let tooltipContent = '';
+                if (vis.displayString === "Lines Over Entire Show") {
+                    tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Lines: ${d.lines}</div>`;
+                } else if (vis.displayString === "Episodes Appeared") {
+                    tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Episodes: ${d.episodes}</div>`;
+                }
                 d3.select('#tooltip')
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
-                    .html(`<div class="tooltip-label">Character: ${d.character}<br>
-                    Lines: ${d.lines}</div>`);
+                    .html(tooltipContent);
             })
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
