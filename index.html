@@ -16,7 +16,7 @@
         <p> Seasons: 5</p>
         <p> Episodes: 52</p>
         <p> Genre: Action</p>
-        <p> Main characters: </p>
+        <p> Main characters: Adora, Kyle, Lonnie, Catra, Shadow Weaver, Angella, Glimmer, Bow, Light, Hope, Razz, Hordak, Perfuma, Sea Hawk, Scorpia, Mermista, Entrapta, Swift Wind, Netossa, Micah, Lance, Huntara, Mara, Horde Prime, Double Trouble </p>
     </div> 
 
     <div class="row">
@@ -26,6 +26,48 @@
         </div>
         <div class="column side"></div>
     </div>
+    <div id="tooltip" style="position: absolute; opacity: 0; pointer-events: none;"></div>
+
+    <p>
+        <label for="char_attr">Character:</label>
+        <select name="char_attr", id="char_attr">
+            <option label="Adora">Adora</option>
+            <option label="Kyle">Kyle</option>
+            <option label="Lonnie">Lonnie</option>
+            <option label="Catra">Catra</option>
+            <option label="Shadow Weaver">Shadow Weaver</option>
+            <option label="Angella">Angella</option>
+            <option label="Glimmer">Glimmer</option>
+            <option label="Bow">Bow</option>
+            <option label="Light">Light</option>
+            <option label="Hope">Hope</option>
+            <option label="Razz">Razz</option>
+            <option label="Hordak">Hordak</option>
+            <option label="Perfuma">Perfuma</option>
+            <option label="Sea Hawk">Sea Hawk</option>
+            <option label="Scorpia">Scorpia</option>
+            <option label="Mermista">Mermista</option>
+            <option label="Entrapta">Entrapta</option>
+            <option label="Swift Wind">Swift Wind</option>
+            <option label="Netossa">Netossa</option>
+            <option label="Micah">Micah</option>
+            <option label="Lance">Lance</option>
+            <option label="Huntara">Huntara</option>
+            <option label="Mara">Mara</option>
+            <option label="Horde Prime">Horde Prime</option>
+            <option label="Double Trouble">Double Trouble</option>
+        </select>
+    </p>
+    <p>
+        <label for="season_attr">Season:</label>
+        <select name="season_attr", id="season_attr">
+            <option label="Season 1">Season 1</option>
+            <option label="Season 2">Season 2</option>
+            <option label="Season 3">Season 3</option>
+            <option label="Season 4">Season 4</option>
+            <option label="Season 5">Season 5</option>
+        </select>
+    </p>
 
     <script src="js/d3.v6.min.js"></script>
     <script src="js/main.js"></script>

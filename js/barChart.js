@@ -91,7 +91,7 @@ class BarchartCustomizable {
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
-                    .html(`<div class="tooltip-label">${vis.displayString}: ${d[vis.column]}<br>
+                    .html(`<div class="tooltip-label">Character: ${d[vis.column]}<br>
                     Lines: ${d.lines}</div>`);
             })
             .on('mouseleave', function () {
