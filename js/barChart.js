@@ -67,8 +67,8 @@ class BarchartCustomizable {
         let vis = this;
 
         // Set the scale input domains
-        vis.xScale.domain(vis.data.map(d => d[vis.column]));
-        vis.yScale.domain([0, d3.max(vis.data, d => d.lines)]);
+        vis.xScale.domain(vis.data.map(d => d.character));
+        vis.yScale.domain([0, d3.max(vis.data, d => d[vis.column])]);
 
         vis.renderVis();
     }
@@ -78,20 +78,20 @@ class BarchartCustomizable {
 
         // Add rectangles
         let bars = vis.chart.selectAll('.bar')
-            .data(vis.data, d => d[vis.column])
+            .data(vis.data, d => d.character)
             .join('rect')
             .attr('class', 'bar')
-            .attr('x', d => vis.xScale(d[vis.column]))
+            .attr('x', d => vis.xScale(d.character))
             .attr('width', vis.xScale.bandwidth())
-            .attr('y', d => vis.yScale(d.lines))
-            .attr('height', d => vis.height - vis.yScale(d.lines))
+            .attr('y', d => vis.yScale(d[vis.column]))
+            .attr('height', d => vis.height - vis.yScale(d[vis.column]))
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
                 d3.select('#tooltip')
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
-                    .html(`<div class="tooltip-label">${vis.displayString}: ${d[vis.column]}<br>
+                    .html(`<div class="tooltip-label">${vis.displayString}: ${d.character}<br>
                     Lines: ${d.lines}</div>`);
             })
             .on('mouseleave', function () {

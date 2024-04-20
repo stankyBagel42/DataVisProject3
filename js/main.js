@@ -15,9 +15,23 @@ d3.csv('data/transcripts.csv')
         d => d.character
       );
 
-    const formattedData = Array.from(linesPerCharacter, ([character, lines]) => ({ character, lines }));
+    const overallLinesData = Array.from(linesPerCharacter, ([character, lines]) => ({ character, lines }));
+    overallLinesData.sort((a, b) => b.lines - a.lines);
 
-    linesBarChart = new BarchartCustomizable({ parentElement: "#linesBarChart", containerHeight: 400 }, formattedData, "character", "Lines");
+    linesBarChart = new BarchartCustomizable({ parentElement: "#linesBarChart", containerHeight: 400 }, overallLinesData, "lines", "Lines Over Entire Show");
     linesBarChart.updateVis()
+
+    const episodesPerCharacter = d3.rollup(
+      data,
+      v => new Set(v.map(d => `${d.season}-${d.episode}`)).size,
+      d => d.character
+  );
+
+    const overallEpisodesData = Array.from(episodesPerCharacter, ([character, episodes]) => ({ character, episodes }));
+    overallEpisodesData.sort((a, b) => b.episodes - a.episodes);
+
+    episodesBarChart = new BarchartCustomizable({ parentElement: "#episodesBarChart", containerHeight: 400 }, overallEpisodesData, "episodes", "Episodes Appeared");
+    episodesBarChart.updateVis();
+
   })
   .catch(error => console.error(error));
