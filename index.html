@@ -67,13 +67,25 @@
     <p>
         <label for="season_attr">Season:</label>
         <select name="season_attr", id="season_attr">
-            <option label="Season 1">Season 1</option>
-            <option label="Season 2">Season 2</option>
-            <option label="Season 3">Season 3</option>
-            <option label="Season 4">Season 4</option>
-            <option label="Season 5">Season 5</option>
+            <option value="1">Season 1</option>
+            <option value="2">Season 2</option>
+            <option value="3">Season 3</option>
+            <option value="4">Season 4</option>
+            <option value="5">Season 5</option>
         </select>
     </p>
+
+    <div class="row">
+        <div class="column side"></div>
+        <div class="column half barchart" id="seasonLinesBarChart_div">
+            <svg id="seasonLinesBarChart"></svg>
+        </div>
+        <div class="column side"></div> 
+        
+        <div class="column half barchart" id="seasonEpisodesBarChart_div">
+            <svg id="seasonEpisodesBarChart"></svg>
+        </div>
+    </div>
 
     <script src="js/d3.v6.min.js"></script>
     <script src="js/main.js"></script>
