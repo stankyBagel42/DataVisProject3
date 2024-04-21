@@ -77,6 +77,30 @@ class Barchart{
     renderVis() {
         let vis = this;
 
+        if (vis.displayString === "Lines In Each Episode") {
+            let bars = vis.chart.selectAll('.bar')
+            .data(vis.data, d => d.episode)
+            .join('rect')
+            .attr('class', 'bar')
+            .attr('x', d => vis.xScale(d.episode))
+            .attr('width', vis.xScale.bandwidth())
+            .attr('y', d => vis.yScale(d[vis.column]))
+            .attr('height', d => vis.height - vis.yScale(d[vis.column]))
+            .style('fill', 'steelblue') 
+            .on('mouseenter', function (event, d) {
+                let tooltipContent = '';
+                tooltipContent = `<div class="tooltip-label">Episode: ${d.episode}<br>Lines: ${d.lines}</div>`;
+                d3.select('#tooltip')
+                    .style('opacity', 1)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY + 10) + 'px')
+                    .html(tooltipContent);
+            })
+            .on('mouseleave', function () {
+                d3.select('#tooltip').style('opacity', 0);
+            });
+        }
+        else{
         let bars = vis.chart.selectAll('.bar')
             .data(vis.data, d => d.character)
             .join('rect')
@@ -88,7 +112,7 @@ class Barchart{
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
-                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season"  || vis.displayString === "Lines In Each Episode") {
+                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Lines: ${d.lines}</div>`;
                 } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Appeared in Each Season") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Episodes: ${d.episodes}</div>`;
@@ -102,6 +126,7 @@ class Barchart{
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
             });
+        }
 
         vis.xAxisG.call(vis.xAxis)
             .selectAll('.tick text')
