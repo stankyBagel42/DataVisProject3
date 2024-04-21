@@ -94,82 +94,46 @@ d3.csv('data/transcripts.csv')
     //character event listener
     d3.select("#char_attr").on("change", function() {
       character = this.value;
-      console.log(character)
-      console.log(season2)
-      characterSeasonLinesPerCharacter = d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character), 
+      characterSeasonLinesPerEpisode =  d3.rollup(
+        data.filter(d => d.season === season2 && d.character === character),
         v => v.length,
-        d => d.character
-      );
-      characterSeasonLinesData = Array.from(characterSeasonLinesPerCharacter, ([character, lines]) => ({ character, lines }));
-      characterSeasonLinesData.sort((a, b) => b.lines - a.lines);
+        d => d.episode 
+    );
+  
+      const characterSeasonLinesData = Array.from(characterSeasonLinesPerEpisode, ([episode, count]) => ({ episode, lines: count }));
 
       characterSeasonLinesBarChart.data = characterSeasonLinesData
       characterSeasonLinesBarChart.updateVis() 
-      
-      characterSeasonEpisodesPerCharacter = d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character), 
-        v => new Set(v.map(d => `${d.season}-${d.episode}`)).size,
-        d => d.character
-      );
-      characterSeasonEpisodesData = Array.from(characterSeasonEpisodesPerCharacter, ([character, episodes]) => ({ character, episodes }));
-      characterSeasonEpisodesData.sort((a, b) => b.episodes - a.episodes);
-
-      characterSeasonEpisodesBarChart.data = characterSeasonEpisodesData
-      characterSeasonEpisodesBarChart.updateVis() 
     });
 
     //season2 event listener
     d3.select("#season_attr2").on("change", function() {
       season2 = +this.value;
-      characterSeasonLinesPerCharacter = d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character), 
+      characterSeasonLinesPerEpisode =  d3.rollup(
+        data.filter(d => d.season === season2 && d.character === character),
         v => v.length,
-        d => d.character
-      );
-      characterSeasonLinesData = Array.from(characterSeasonLinesPerCharacter, ([character, lines]) => ({ character, lines }));
-      characterSeasonLinesData.sort((a, b) => b.lines - a.lines);
+        d => d.episode 
+    );
+  
+      const characterSeasonLinesData = Array.from(characterSeasonLinesPerEpisode, ([episode, count]) => ({ episode, lines: count }));
 
       characterSeasonLinesBarChart.data = characterSeasonLinesData
       characterSeasonLinesBarChart.updateVis() 
-      
-      characterSeasonEpisodesPerCharacter = d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character), 
-        v => new Set(v.map(d => `${d.season}-${d.episode}`)).size,
-        d => d.character
-      );
-      characterSeasonEpisodesData = Array.from(characterSeasonEpisodesPerCharacter, ([character, episodes]) => ({ character, episodes }));
-      characterSeasonEpisodesData.sort((a, b) => b.episodes - a.episodes);
-
-      characterSeasonEpisodesBarChart.data = characterSeasonEpisodesData
-      characterSeasonEpisodesBarChart.updateVis() 
     });
 
-    // character season lines
-    characterSeasonLinesPerCharacter = d3.rollup(
-      data.filter(d => d.season === season2 && d.character === character), 
+    // character lines per episode for season
+    characterSeasonLinesPerEpisode =  d3.rollup(
+      data.filter(d => d.season === season2 && d.character === character),
       v => v.length,
-      d => d.character
-    );
+      d => d.episode 
+  );
 
-    characterSeasonLinesData = Array.from(characterSeasonLinesPerCharacter, ([character, lines]) => ({ character, lines }));
-    characterSeasonLinesData.sort((a, b) => b.lines - a.lines);
+    const characterSeasonLinesData = Array.from(characterSeasonLinesPerEpisode, ([episode, count]) => ({ episode, lines: count }));
 
-    characterSeasonLinesBarChart = new Barchart({ parentElement: "#characterSeasonLinesBarChart", containerHeight: 400 }, characterSeasonLinesData, "lines", "Lines Over Each Season By Character");
+    console.log(characterSeasonLinesPerEpisode);
+    console.log(characterSeasonLinesData); 
+
+    characterSeasonLinesBarChart = new Barchart({ parentElement: "#characterSeasonLinesBarChart", containerHeight: 400 }, characterSeasonLinesData, "lines", "Lines In Each Episode");
     characterSeasonLinesBarChart.updateVis()
-
-    // character season episodes
-    characterSeasonEpisodesPerCharacter = d3.rollup(
-      data.filter(d => d.season === season2 && d.character === character), 
-      v => new Set(v.map(d => `${d.season}-${d.episode}`)).size,
-      d => d.character
-    );
-
-    characterSeasonEpisodesData = Array.from(characterSeasonEpisodesPerCharacter, ([character, episodes]) => ({ character, episodes }));
-    characterSeasonEpisodesData.sort((a, b) => b.episodes - a.episodes);
-
-    characterSeasonEpisodesBarChart = new Barchart({ parentElement: "#characterSeasonEpisodesBarChart", containerHeight: 400 }, characterSeasonEpisodesData, "episodes", "Episodes Appeared in Each Season By Character");
-    characterSeasonEpisodesBarChart.updateVis()
-
   })
   .catch(error => console.error(error));
