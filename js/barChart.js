@@ -67,6 +67,9 @@ class Barchart{
 
         vis.xScale.domain(vis.data.map(d => d.character));
         vis.yScale.domain([0, d3.max(vis.data, d => d[vis.column])]);
+        if (vis.displayString === "Lines In Each Episode") {
+            vis.xScale.domain(vis.data.map(d => d.episode));
+        }
 
         vis.renderVis();
     }
@@ -85,9 +88,9 @@ class Barchart{
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
-                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season" || vis.displayString === "Lines Over Each Season By Character") {
+                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season"  || vis.displayString === "Lines In Each Episode") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Lines: ${d.lines}</div>`;
-                } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Appeared in Each Season" || vis.displayString === "Episodes Appeared in Each Season By Character") {
+                } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Appeared in Each Season") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Episodes: ${d.episodes}</div>`;
                 } 
                 d3.select('#tooltip')
