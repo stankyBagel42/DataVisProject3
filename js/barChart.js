@@ -17,7 +17,6 @@ class Barchart{
     initVis() {
         let vis = this;
 
-        console.log(vis.data)
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
 
@@ -86,11 +85,11 @@ class Barchart{
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
-                if (vis.displayString === "Lines Over Entire Show") {
+                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season" || vis.displayString === "Lines Over Each Season By Character") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Lines: ${d.lines}</div>`;
-                } else if (vis.displayString === "Episodes Appeared") {
+                } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Appeared in Each Season" || vis.displayString === "Episodes Appeared in Each Season By Character") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Episodes: ${d.episodes}</div>`;
-                }
+                } 
                 d3.select('#tooltip')
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
