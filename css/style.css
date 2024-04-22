@@ -42,8 +42,8 @@
 }
 
 #chordDiagram {
-  width: 450px;
-  height: 450px;
+  width: 800px;
+  height: 800px;
 }
 .container {  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

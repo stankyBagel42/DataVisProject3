@@ -37,7 +37,7 @@ class ChordDiagram{
                 .attr("width", vis.width)
                 .attr("height", vis.height)
             .append("g")
-                .attr("transform", "translate(220,220)")
+                .attr("transform", "translate(300,300)")
 
         // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
         vis.res = d3.chord()
@@ -61,6 +61,34 @@ class ChordDiagram{
                 .outerRadius(210)
                 )
 
+        
+        // Add labels to the groups
+        vis.svg
+            .datum(vis.res)
+            .append("g")
+            .selectAll("text")
+            .data(function (d) { return d.groups; })
+            .enter()
+            .append("text")
+            .attr("dy", ".35em") // Adjust vertical alignment
+            .attr("transform", function (d) {
+                // Calculate the midpoint of the arc
+                const startAngle = d.startAngle;
+                const endAngle = d.endAngle;
+                const midAngle = (startAngle + endAngle) / 2;
+                const outerRadius = 220; // Adjust based on your diagram's radius
+                const x = outerRadius * Math.cos(midAngle - Math.PI / 2);
+                const y = outerRadius * Math.sin(midAngle - Math.PI / 2)
+                return "translate(" + x + "," + y + ")";
+            })
+            .attr("text-anchor", function (d) {
+                // Determine the text anchor based on the midpoint angle
+                const midAngle = (d.startAngle + d.endAngle) / 2;
+                return (midAngle < -Math.PI / 2 || midAngle > Math.PI / 2) ? "end" : "start";
+            })
+            .text(function (d) { return Names[d.index]; });
+
+            
         // Add the links between groups
         vis.svg
             .datum(vis.res)
