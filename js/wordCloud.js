@@ -65,9 +65,9 @@ class WordCloud{
         
         // Clear existing text elements representing words
         chart.selectAll("text").remove();
-
-        // Append new text elements for the updated word cloud data
-        chart
+        if(words.length != 0){
+             // Append new text elements for the updated word cloud data
+            chart
             .attr("transform", "translate(" +width + "," + height + ")")
             .selectAll("text")
             .data(words)
@@ -79,8 +79,8 @@ class WordCloud{
             .attr("transform", function(d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
-        .text(function(d) { return d.text; });
-
+            .text(function(d) { return d.text; });
+        }
     }
     updateVis() {
         let vis = this;

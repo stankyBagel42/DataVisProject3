@@ -55,8 +55,7 @@ d3.csv('data/transcripts.csv')
       var filteredData = data.filter(d => seasons.includes(d.season))
 
       // re-calculate the data for various charts
-      seasonLinesPerCharacter = d3.rollup(filteredData, v => v.length, d => d.character);
-      seasonLinesData = Array.from(seasonLinesPerCharacter, ([character, lines]) => ({ character, lines }));
+      seasonLinesData = Array.from(d3.rollup(filteredData, v => v.length, d => d.character), ([character, lines]) => ({ character, lines }));
       seasonLinesData.sort((a, b) => b.lines - a.lines);
       seasonLinesBarChart.data = seasonLinesData
 
@@ -112,16 +111,18 @@ d3.csv('data/transcripts.csv')
 
       // Count the frequency of each word
       var wordFrequency = {};
-      words.forEach(function (word) {
-        if (!stopWords.includes(word)) { // Check if the word is not a stop word
-          if (wordFrequency[word]) {
-            wordFrequency[word]++;
-          } else {
-            wordFrequency[word] = 1;
+      if (words){
+        words.forEach(function (word) {
+          if (!stopWords.includes(word)) { // Check if the word is not a stop word
+            if (wordFrequency[word]) {
+              wordFrequency[word]++;
+            } else {
+              wordFrequency[word] = 1;
+            }
           }
-        }
-      });
-
+        });  
+      }
+     
       // Define minimum font size, maximum font size, and maximum frequency
       var maxFrequency = Math.max(...Object.values(wordFrequency)); // Maximum frequency
 
@@ -168,15 +169,17 @@ d3.csv('data/transcripts.csv')
 
       // Count the frequency of each word
       var wordFrequency = {};
-      words.forEach(function (word) {
-        if (!stopWords.includes(word)) { // Check if the word is not a stop word
-          if (wordFrequency[word]) {
-            wordFrequency[word]++;
-          } else {
-            wordFrequency[word] = 1;
+      if (words){
+        words.forEach(function (word) {
+          if (!stopWords.includes(word)) { // Check if the word is not a stop word
+            if (wordFrequency[word]) {
+              wordFrequency[word]++;
+            } else {
+              wordFrequency[word] = 1;
+            }
           }
-        }
-      });
+        });  
+      }
 
       // Define minimum font size, maximum font size, and maximum frequency
       var maxFrequency = Math.max(...Object.values(wordFrequency)); // Maximum frequency
@@ -193,7 +196,7 @@ d3.csv('data/transcripts.csv')
     });
 
     //textbox filter
-    d3.select("#textbox").on("input", function () {
+    d3.select("#textbox").on("change", function () {
       text = this.value.toLowerCase();
       characterSeasonLinesPerEpisode = d3.rollup(
         data.filter(d => d.season === season2 && d.character === character && d.line.toLowerCase().includes(text)),
