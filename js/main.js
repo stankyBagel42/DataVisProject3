@@ -1,6 +1,7 @@
 let season = 1;
 let season2 = 1;
 let character = "Adora";
+let text = "";
 
 d3.csv('data/transcripts.csv')
   .then(data => {
@@ -62,7 +63,7 @@ d3.csv('data/transcripts.csv')
       seasonEpisodesData.sort((a, b) => b.episodes - a.episodes);
 
       seasonEpisodesBarChart.data = seasonEpisodesData
-      seasonEpisodesBarChart.updateVis() 
+      seasonEpisodesBarChart.updateVis()
     });
 
     // season lines
@@ -95,7 +96,7 @@ d3.csv('data/transcripts.csv')
     d3.select("#char_attr").on("change", function() {
       character = this.value;
       characterSeasonLinesPerEpisode =  d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character),
+        data.filter(d => d.season === season2 && d.character === character && d.line.toLowerCase().includes(text)),
         v => v.length,
         d => d.episode 
     );
@@ -110,7 +111,7 @@ d3.csv('data/transcripts.csv')
     d3.select("#season_attr2").on("change", function() {
       season2 = +this.value;
       characterSeasonLinesPerEpisode =  d3.rollup(
-        data.filter(d => d.season === season2 && d.character === character),
+        data.filter(d => d.season === season2 && d.character === character && d.line.toLowerCase().includes(text)),
         v => v.length,
         d => d.episode 
     );
@@ -119,6 +120,22 @@ d3.csv('data/transcripts.csv')
 
       characterSeasonLinesBarChart.data = characterSeasonLinesData
       characterSeasonLinesBarChart.updateVis() 
+    });
+
+    //textbox filter
+    d3.select("#textbox").on("input", function() {
+      text = this.value.toLowerCase();
+      characterSeasonLinesPerEpisode =  d3.rollup(
+        data.filter(d => d.season === season2 && d.character === character && d.line.toLowerCase().includes(text)),
+        v => v.length,
+        d => d.episode 
+    );
+  
+      const characterSeasonLinesData = Array.from(characterSeasonLinesPerEpisode, ([episode, count]) => ({ episode, lines: count }));
+
+      characterSeasonLinesBarChart.data = characterSeasonLinesData
+      characterSeasonLinesBarChart.updateVis() 
+
     });
 
     // character lines per episode for season
