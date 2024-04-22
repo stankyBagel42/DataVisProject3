@@ -6,6 +6,23 @@ let minFontSize = 5;
 let maxFontSize = 100;
 let text = "";
 
+// logic for collapsible section 
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+
+
 d3.csv('data/transcripts.csv')
   .then(data => {
 
@@ -55,8 +72,7 @@ d3.csv('data/transcripts.csv')
       var filteredData = data.filter(d => seasons.includes(d.season))
 
       // re-calculate the data for various charts
-      seasonLinesPerCharacter = d3.rollup(filteredData, v => v.length, d => d.character);
-      seasonLinesData = Array.from(seasonLinesPerCharacter, ([character, lines]) => ({ character, lines }));
+      seasonLinesData = Array.from(d3.rollup(filteredData, v => v.length, d => d.character), ([character, lines]) => ({ character, lines }));
       seasonLinesData.sort((a, b) => b.lines - a.lines);
       seasonLinesBarChart.data = seasonLinesData
 
@@ -77,13 +93,13 @@ d3.csv('data/transcripts.csv')
 
     seasonLinesData = Array.from(d3.rollup(data, v => v.length, d => d.character), ([character, lines]) => ({ character, lines }));
     seasonLinesData.sort((a, b) => b.lines - a.lines);
-    seasonLinesBarChart = new Barchart({ parentElement: "#seasonLinesBarChart", containerHeight: 400 }, seasonLinesData, "lines", "Lines Over Each Season");
+    seasonLinesBarChart = new Barchart({ parentElement: "#seasonLinesBarChart", containerHeight: 400 }, seasonLinesData, "lines", "Character Lines Over Each Season");
     seasonLinesBarChart.updateVis()
 
     // season episodes
     seasonEpisodesData = Array.from(d3.rollup(data, v => new Set(v.map(d => `${d.season}-${d.episode}`)).size, d => d.character), ([character, episodes]) => ({ character, episodes }));
     seasonEpisodesData.sort((a, b) => b.episodes - a.episodes);
-    seasonEpisodesBarChart = new Barchart({ parentElement: "#seasonEpisodesBarChart", containerHeight: 400 }, seasonEpisodesData, "episodes", "Episodes Appeared in Each Season");
+    seasonEpisodesBarChart = new Barchart({ parentElement: "#seasonEpisodesBarChart", containerHeight: 400 }, seasonEpisodesData, "episodes", "Episodes Character Appeared in Each Season");
     seasonEpisodesBarChart.updateVis()
 
     //character event listener
@@ -112,16 +128,18 @@ d3.csv('data/transcripts.csv')
 
       // Count the frequency of each word
       var wordFrequency = {};
-      words.forEach(function (word) {
-        if (!stopWords.includes(word)) { // Check if the word is not a stop word
-          if (wordFrequency[word]) {
-            wordFrequency[word]++;
-          } else {
-            wordFrequency[word] = 1;
+      if (words){
+        words.forEach(function (word) {
+          if (!stopWords.includes(word)) { // Check if the word is not a stop word
+            if (wordFrequency[word]) {
+              wordFrequency[word]++;
+            } else {
+              wordFrequency[word] = 1;
+            }
           }
-        }
-      });
-
+        });  
+      }
+     
       // Define minimum font size, maximum font size, and maximum frequency
       var maxFrequency = Math.max(...Object.values(wordFrequency)); // Maximum frequency
 
@@ -168,15 +186,17 @@ d3.csv('data/transcripts.csv')
 
       // Count the frequency of each word
       var wordFrequency = {};
-      words.forEach(function (word) {
-        if (!stopWords.includes(word)) { // Check if the word is not a stop word
-          if (wordFrequency[word]) {
-            wordFrequency[word]++;
-          } else {
-            wordFrequency[word] = 1;
+      if (words){
+        words.forEach(function (word) {
+          if (!stopWords.includes(word)) { // Check if the word is not a stop word
+            if (wordFrequency[word]) {
+              wordFrequency[word]++;
+            } else {
+              wordFrequency[word] = 1;
+            }
           }
-        }
-      });
+        });  
+      }
 
       // Define minimum font size, maximum font size, and maximum frequency
       var maxFrequency = Math.max(...Object.values(wordFrequency)); // Maximum frequency
@@ -193,7 +213,7 @@ d3.csv('data/transcripts.csv')
     });
 
     //textbox filter
-    d3.select("#textbox").on("input", function () {
+    d3.select("#textbox").on("change", function () {
       text = this.value.toLowerCase();
       characterSeasonLinesPerEpisode = d3.rollup(
         data.filter(d => d.season === season2 && d.character === character && d.line.toLowerCase().includes(text)),
