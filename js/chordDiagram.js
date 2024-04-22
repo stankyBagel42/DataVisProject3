@@ -79,8 +79,13 @@ class ChordDiagram{
                 const midAngle = (startAngle + endAngle) / 2;
                 const outerRadius = 220; // Adjust based on your diagram's radius
                 const x = outerRadius * Math.cos(midAngle - Math.PI / 2);
-                const y = outerRadius * Math.sin(midAngle - Math.PI / 2)
-                return "translate(" + x + "," + y + ")";
+                const y = outerRadius * Math.sin(midAngle - Math.PI / 2);
+                if (d.index == 1) {
+                    return "translate(" + (x + 50) + "," + y + ")";
+                }
+                else {
+                    return "translate(" + x + "," + y + ")"
+                };
             })
             .attr("text-anchor", function (d) {
                 // Determine the text anchor based on the midpoint angle
