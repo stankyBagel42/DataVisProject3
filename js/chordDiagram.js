@@ -28,6 +28,10 @@ class ChordDiagram{
             [26,21,16,36,9,10,0]
         ];
 
+        var colorScale = d3.scaleOrdinal(["Adora", "Glimmer", "Bow", "Catra", "Entrapta", "Scorpia", "Shadow Weaver"],
+            ["gold", "magenta", "red", "salmon", "mediumorchid", "maroon", "black"]);
+        var Names = ["Adora", "Glimmer", "Bow", "Catra", "Entrapta", "Scorpia", "Shadow Weaver"];
+
         vis.svg = d3.select("#chordDiagram")
             .append("svg")
                 .attr("width", vis.width)
@@ -35,7 +39,6 @@ class ChordDiagram{
             .append("g")
                 .attr("transform", "translate(220,220)")
 
-        console.log(vis.data)
         // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
         vis.res = d3.chord()
             .padAngle(0.05)     // padding between entities (black arc)
@@ -51,7 +54,7 @@ class ChordDiagram{
             .enter()
             .append("g")
             .append("path")
-                .style("fill", "grey")
+                .style("fill", d => colorScale(Names[d.index]))
                 .style("stroke", "black")
                 .attr("d", d3.arc()
                 .innerRadius(200)
@@ -69,8 +72,27 @@ class ChordDiagram{
                 .attr("d", d3.ribbon()
                 .radius(200)
                 )
-                .style("fill", "#69b3a2")
-                .style("stroke", "black");
+                .style("fill",  d => colorScale(Names[d.source.index]))
+                .style("stroke", "black")
+                .on('mouseenter', function (event, d) {
+                    let tooltipContent = '';
+                    tooltipContent = `<div class="tooltip-label">${Names[d.source.index]} and ${Names[d.target.index]}<br>
+                        ${d.source.value.toLocaleString("en-US")} Scenes Together </div>`;
+                    d3.select('#tooltip')
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY + 10) + 'px')
+                        .html(tooltipContent);
+                    d3.select(event.currentTarget)
+                        .style("fill", "green");
+                })
+                .on('mouseleave', function () {
+                    d3.select('#tooltip').style('opacity', 0);
+                    d3.select(event.currentTarget)
+                        .style("fill",  d => colorScale(Names[d.source.index]))
+
+                });
+        
     }
 
     updateVis() {}
