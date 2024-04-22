@@ -137,3 +137,21 @@ d3.csv('data/transcripts.csv')
     characterSeasonLinesBarChart.updateVis()
   })
   .catch(error => console.error(error));
+
+
+  d3.csv('data/allSeasonsInteractions.csv')
+  .then(data2 => {
+
+    data2.forEach(d => {
+      d.Adora = +d.Adora;
+      d.Glimmer = +d.Glimmer;
+      d.Bow = +d.Bow;
+      d.Catra = +d.Catra;
+      d.Entrapta = +d.Entrapta;
+      d.Scorpia =+d.Scorpia;
+      d.ShadowWeaver = +d.ShadowWeaver;
+    })
+
+    chordDiagram = new ChordDiagram({parentElement: "#chordDiagram"}, data2)
+  })
+  .catch(error => console.error(error));
