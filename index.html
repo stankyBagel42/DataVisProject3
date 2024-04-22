@@ -97,11 +97,6 @@
         </select>
     </p>
 
-    <div class="centered_element">
-        <label for="textbox">Find words:</label>
-        <input type="text" id="textbox" name="textbox">
-    </div>
-
     <div class="row">
         <div class="column side"></div>
         <div class="column half barchart" id="characterSeasonLinesBarChart_div">
@@ -114,19 +109,21 @@
         </div>
     </div>
 
-    
-
     <div class="row">
-        <div class="column side"></div>
         <div class="column half" id="chordDiagram_div">
             <svg id="chordDiagram"></svg>
+            <svg id="wordCloud"></svg>
+
         </div>
-        <div class="column side"></div> 
+        <div class="column half" id="wordCloud_div">
+        </div>
     </div>
 
     <script src="js/d3.v6.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
     <script src="js/main.js"></script>
     <script src="js/barChart.js"></script>
+    <script src="js/wordCloud.js"></script>
     <script src="js/chordDiagram.js"></script>
 
 </body>
