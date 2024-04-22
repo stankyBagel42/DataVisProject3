@@ -22,13 +22,8 @@
     
     <div id="tooltip" style="position: absolute; opacity: 0; pointer-events: none;"></div>
     <div class="container">
-        <div class="allLines"></div>
-        <div class="allEpisodes"></div>
-        <div class="seasonLines"></div>
-        <div class="seasonEpisodes"></div>
-        <div class="chordChart"></div>
-      </div>
-    <div class="container">
+        
+       
         <div class="seasonLines">    
             <form id="seasonForm">
                 <input type="checkbox" id="season1" name="season" value="Season 1" checked>
@@ -42,6 +37,10 @@
                 <input type="checkbox" id="season5" name="season" value="Season 5" checked>
                 <label class="checkbox-label" for="season5">Season 5</label>
             </form>
+            <div class="centered_element">
+                <label for="textbox">Find words:</label>
+                <input type="text" id="textbox" name="textbox">
+            </div>
             <svg id="seasonLinesBarChart"></svg>
         </div>
         <div class="seasonEpisodes">
