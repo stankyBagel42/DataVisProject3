@@ -45,3 +45,40 @@
   width: 450px;
   height: 450px;
 }
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "seasonLines seasonLines seasonEpisodes seasonEpisodes"
+    "characterFilters characterFilters characterFilters characterFilters"
+    "chordChart chordChart chordChart chordChart"
+    "chordChart chordChart chordChart chordChart";
+}
+
+.seasonLines { grid-area: seasonLines;}
+
+.seasonEpisodes { grid-area: seasonEpisodes; }
+
+.characterFilters {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 15% 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . . ."
+    "episodeLines episodeLines wordCloud wordCloud";
+  grid-area: characterFilters;
+}
+
+.episodeLines { grid-area: episodeLines; }
+
+.wordCloud { grid-area: wordCloud; }
+
+.chordChart { grid-area: chordChart; }
+
+.checkbox-label {
+  display: inline-block;
+  margin-right: 10px; /* Adjust the spacing between checkboxes */
+}

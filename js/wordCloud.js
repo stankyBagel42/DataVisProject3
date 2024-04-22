@@ -62,19 +62,24 @@ class WordCloud{
     draw(words){       
         var width = layout.size()[0]/2;
         var height = layout.size()[1]/2;
+        
+        // Clear existing text elements representing words
+        chart.selectAll("text").remove();
+
+        // Append new text elements for the updated word cloud data
         chart
-          .attr("transform", "translate(" +width + "," + height + ")")
-          .selectAll("text")
+            .attr("transform", "translate(" +width + "," + height + ")")
+            .selectAll("text")
             .data(words)
-          .enter().append("text")
+            .enter().append("text")
             .style("font-size", function(d) { return d.size; })
             .style("fill", "#69b3a2")
             .attr("text-anchor", "middle")
             .style("font-family", "Impact")
             .attr("transform", function(d) {
-              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
-            .text(function(d) { return d.text; });
+        .text(function(d) { return d.text; });
 
     }
     updateVis() {
