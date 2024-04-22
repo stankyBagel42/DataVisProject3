@@ -26,84 +26,91 @@
     <div id="tooltip" style="position: absolute; opacity: 0; pointer-events: none;"></div>
     <div class="container">
         
-       
-        <div class="seasonLines">    
-            <form id="seasonForm">
-                <input type="checkbox" id="season1" name="season" value="Season 1" checked>
-                <label class="checkbox-label" for="season1">Season 1</label>
-                <input type="checkbox" id="season2" name="season" value="Season 2" checked>
-                <label class="checkbox-label" for="season2">Season 2</label>
-                <input type="checkbox" id="season3" name="season" value="Season 3" checked>
-                <label class="checkbox-label" for="season3">Season 3</label>
-                <input type="checkbox" id="season4" name="season" value="Season 4" checked>
-                <label class="checkbox-label" for="season4">Season 4</label>
-                <input type="checkbox" id="season5" name="season" value="Season 5" checked>
-                <label class="checkbox-label" for="season5">Season 5</label>
-            </form>
-            <div class="centered_element">
-                <label for="textbox">Find words:</label>
-                <input type="text" id="textbox" name="textbox">
-            </div>
-            <svg id="seasonLinesBarChart"></svg>
-        </div>
-        <div class="seasonEpisodes">
-            <div style="height:21px; width:100%; clear:both;"></div>
-            <svg id="seasonEpisodesBarChart"></svg>
+        <div class="seasonFilters">
+            <div class="seasonLines">    
+                <form id="seasonForm">
+                    <input type="checkbox" id="season1" name="season" value="Season 1" checked>
+                    <label class="checkbox-label" for="season1">Season 1</label>
+                    <input type="checkbox" id="season2" name="season" value="Season 2" checked>
+                    <label class="checkbox-label" for="season2">Season 2</label>
+                    <input type="checkbox" id="season3" name="season" value="Season 3" checked>
+                    <label class="checkbox-label" for="season3">Season 3</label>
+                    <input type="checkbox" id="season4" name="season" value="Season 4" checked>
+                    <label class="checkbox-label" for="season4">Season 4</label>
+                    <input type="checkbox" id="season5" name="season" value="Season 5" checked>
+                    <label class="checkbox-label" for="season5">Season 5</label>
+                </form>
 
-        </div>
-        <div class="chordChart">
-            
-            <svg id="chordDiagram"></svg>
+                <svg id="seasonLinesBarChart"></svg>
+            </div>
+            <div class="seasonEpisodes">
+                <div style="height:21px; width:100%; clear:both;"></div>
+                <svg id="seasonEpisodesBarChart"></svg>    
         </div>
         
+        </div>
         <div class="characterFilters">
-            <p>
-                <label for="char_attr">Character:</label>
-                <select name="char_attr", id="char_attr">
-                    <option label="Adora">Adora</option>
-                    <option label="Catra">Catra</option>
-                    <option label="Shadow Weaver">Shadow Weaver</option>
-                    <option label="Angella">Angella</option>
-                    <option label="Glimmer">Glimmer</option>
-                    <option label="Bow">Bow</option>
-                    <option label="Light Hope">Light Hope</option>
-                    <option label="Frosta">Frosta</option>
-                    <option label="Razz">Razz</option>
-                    <option label="Hordak">Hordak</option>
-                    <option label="Perfuma">Perfuma</option>
-                    <option label="Kyle">Kyle</option>
-                    <option label="Lonnie">Lonnie</option>
-                    <option label="Sea Hawk">Sea Hawk</option>
-                    <option label="Scorpia">Scorpia</option>
-                    <option label="Mermista">Mermista</option>
-                    <option label="Entrapta">Entrapta</option>
-                    <option label="Swift Wind">Swift Wind</option>
-                    <option label="Netossa">Netossa</option>
-                    <option label="Micah">Micah</option>
-                    <option label="Lance">Lance</option>
-                    <option label="Huntara">Huntara</option>
-                    <option label="Mara">Mara</option>
-                    <option label="Horde Prime">Horde Prime</option>
-                    <option label="Double Trouble">Double Trouble</option>
-                </select>
-                <label for="season_attr2">Season:</label>
-                <select name="season_attr2", id="season_attr2">
-                    <option value="1">Season 1</option>
-                    <option value="2">Season 2</option>
-                    <option value="3">Season 3</option>
-                    <option value="4">Season 4</option>
-                    <option value="5">Season 5</option>
-                </select>
-            </p>
+                
+                <div>
+                    <label for="textbox">Find words:</label>
+                    <input type="text" id="textbox" name="textbox">
+                </div>
+                <div>
+                    <label for="char_attr">Character:</label>
+                    <select name="char_attr", id="char_attr">
+                        <option label="Adora">Adora</option>
+                        <option label="Catra">Catra</option>
+                        <option label="Shadow Weaver">Shadow Weaver</option>
+                        <option label="Angella">Angella</option>
+                        <option label="Glimmer">Glimmer</option>
+                        <option label="Bow">Bow</option>
+                        <option label="Light Hope">Light Hope</option>
+                        <option label="Frosta">Frosta</option>
+                        <option label="Razz">Razz</option>
+                        <option label="Hordak">Hordak</option>
+                        <option label="Perfuma">Perfuma</option>
+                        <option label="Kyle">Kyle</option>
+                        <option label="Lonnie">Lonnie</option>
+                        <option label="Sea Hawk">Sea Hawk</option>
+                        <option label="Scorpia">Scorpia</option>
+                        <option label="Mermista">Mermista</option>
+                        <option label="Entrapta">Entrapta</option>
+                        <option label="Swift Wind">Swift Wind</option>
+                        <option label="Netossa">Netossa</option>
+                        <option label="Micah">Micah</option>
+                        <option label="Lance">Lance</option>
+                        <option label="Huntara">Huntara</option>
+                        <option label="Mara">Mara</option>
+                        <option label="Horde Prime">Horde Prime</option>
+                        <option label="Double Trouble">Double Trouble</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="season_attr2">Season:</label>
+                    <select name="season_attr2", id="season_attr2">
+                        <option value="1">Season 1</option>
+                        <option value="2">Season 2</option>
+                        <option value="3">Season 3</option>
+                        <option value="4">Season 4</option>
+                        <option value="5">Season 5</option>
+                    </select>
+                </div>
+            
+          
             <div class="episodeLines">
                
                 <svg id="characterSeasonLinesBarChart"></svg>
             </div>
             <div class="wordCloud">
+                <h3>Word Cloud for Character in Selected Season</h3>
                 <svg id="wordCloud"></svg>
 
             </div>
-          </div>
+        </div>
+            <div class="chordChart">
+                <h3>Character Interactions Throughout the Show</h3>
+                <svg id="chordDiagram"></svg>
+            </div>
       </div>
     
 

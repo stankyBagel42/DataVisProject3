@@ -47,19 +47,14 @@
 }
 .container {  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "seasonLines seasonLines seasonEpisodes seasonEpisodes"
+    "seasonFilters seasonFilters seasonFilters seasonFilters"
     "characterFilters characterFilters characterFilters characterFilters"
-    "chordChart chordChart chordChart chordChart"
     "chordChart chordChart chordChart chordChart";
 }
-
-.seasonLines { grid-area: seasonLines;}
-
-.seasonEpisodes { grid-area: seasonEpisodes; }
 
 .characterFilters {  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -70,13 +65,31 @@
     ". . . ."
     "episodeLines episodeLines wordCloud wordCloud";
   grid-area: characterFilters;
+  border: groove;
 }
 
 .episodeLines { grid-area: episodeLines; }
 
 .wordCloud { grid-area: wordCloud; }
 
-.chordChart { grid-area: chordChart; }
+.seasonFilters {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "seasonLines seasonLines seasonEpisodes seasonEpisodes";
+  grid-area: seasonFilters;
+  border:groove
+}
+
+.seasonLines { grid-area: seasonLines; }
+
+.seasonEpisodes { grid-area: seasonEpisodes; }
+
+.chordChart { grid-area: chordChart; 
+justify-self: center;
+}
 
 .checkbox-label {
   display: inline-block;
