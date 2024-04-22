@@ -112,9 +112,9 @@ class Barchart{
             .style('fill', 'steelblue') 
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
-                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Lines Over Each Season") {
+                if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Character Lines Over Each Season") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Lines: ${d.lines}</div>`;
-                } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Appeared in Each Season") {
+                } else if (vis.displayString === "Episodes Appeared" || vis.displayString === "Episodes Character Appeared in Each Season") {
                     tooltipContent = `<div class="tooltip-label">Character: ${d.character}<br>Episodes: ${d.episodes}</div>`;
                 } 
                 d3.select('#tooltip')
