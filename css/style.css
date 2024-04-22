@@ -40,3 +40,8 @@
     padding: 5px;
     border-radius: 3px;
 }
+
+#chordDiagram {
+  width: 1200px;
+  height: 1200px;
+}

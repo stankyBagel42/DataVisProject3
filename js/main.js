@@ -147,14 +147,10 @@ d3.csv('data/transcripts.csv')
 
     const characterSeasonLinesData = Array.from(characterSeasonLinesPerEpisode, ([episode, count]) => ({ episode, lines: count }));
 
-    console.log(characterSeasonLinesPerEpisode);
-    console.log(characterSeasonLinesData); 
-
     characterSeasonLinesBarChart = new Barchart({ parentElement: "#characterSeasonLinesBarChart", containerHeight: 400 }, characterSeasonLinesData, "lines", "Lines In Each Episode");
     characterSeasonLinesBarChart.updateVis()
   })
   .catch(error => console.error(error));
-
 
   d3.csv('data/allSeasonsInteractions.csv')
   .then(data2 => {
