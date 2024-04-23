@@ -3,7 +3,7 @@ class Barchart{
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 710,
-            containerHeight: _config.containerHeight || 200,
+            containerHeight: _config.containerHeight || 210,
             margin: _config.margin || { top: 10, right: 5, bottom: 75, left: 40 },
             reverseOrder: _config.reverseOrder || false,
             tooltipPadding: _config.tooltipPadding || 15
@@ -40,7 +40,7 @@ class Barchart{
 
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
-            .attr('height', vis.config.containerHeight);
+            .attr('height', vis.config.containerHeight+20);
 
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top + 30})`);
@@ -58,6 +58,9 @@ class Barchart{
             .attr("text-anchor", "end")
             .attr("x", (vis.width / 2) + margin.left)
             .attr("y", margin.top)
+            .attr("font-size", "1.05em")
+            .attr("font-weight", "bold")
+            .attr("font-family", "times-new-roman")
             .text(this.displayString);
         vis.inReset = false;
     }
@@ -77,6 +80,9 @@ class Barchart{
     renderVis() {
         let vis = this;
 
+        var colorScale = d3.scaleOrdinal(["Adora", "Glimmer", "Bow", "Catra", "Entrapta", "Scorpia", "Shadow Weaver", "Other"],
+            ["gold", "magenta", "red", "salmon", "mediumorchid", "maroon", "black", "steelblue"]);
+
         if (vis.displayString === "Lines In Each Episode") {
             let bars = vis.chart.selectAll('.bar')
             .data(vis.data, d => d.episode)
@@ -86,7 +92,7 @@ class Barchart{
             .attr('width', vis.xScale.bandwidth())
             .attr('y', d => vis.yScale(d[vis.column]))
             .attr('height', d => vis.height - vis.yScale(d[vis.column]))
-            .style('fill', 'steelblue') 
+            .style('fill', '#69b3a2') 
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
                 tooltipContent = `<div class="tooltip-label">Episode: ${d.episode}<br>Lines: ${d.lines}</div>`;
@@ -109,7 +115,14 @@ class Barchart{
             .attr('width', vis.xScale.bandwidth())
             .attr('y', d => vis.yScale(d[vis.column]))
             .attr('height', d => vis.height - vis.yScale(d[vis.column]))
-            .style('fill', 'steelblue') 
+            .style('fill', function(d) {
+                let colorScaleDomain = colorScale.domain();
+                if (colorScaleDomain.includes(d.character)) {
+                    return colorScale(d.character);
+                } else {
+                    return '#69b3a2';
+                }
+            })
             .on('mouseenter', function (event, d) {
                 let tooltipContent = '';
                 if (vis.displayString === "Lines Over Entire Show" || vis.displayString === "Character Lines Over Each Season") {

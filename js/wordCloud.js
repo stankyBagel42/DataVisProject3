@@ -62,6 +62,8 @@ class WordCloud{
     draw(words){       
         var width = layout.size()[0]/2;
         var height = layout.size()[1]/2;
+        var colorScale = d3.scaleOrdinal(["adora", "glimmer", "bow", "catra", "entrapta", "scorpia", "shadow", "weaver"],
+            ["gold", "magenta", "red", "salmon", "mediumorchid", "maroon", "black", "black"]);
         
         // Clear existing text elements representing words
         chart.selectAll("text").remove();
@@ -73,7 +75,14 @@ class WordCloud{
             .data(words)
             .enter().append("text")
             .style("font-size", function(d) { return d.size; })
-            .style("fill", "#69b3a2")
+            .style('fill', function(d) {
+                let colorScaleDomain = colorScale.domain();
+                if (colorScaleDomain.includes(d.text)) {
+                    return colorScale(d.text);
+                } else {
+                    return "#69b3a2";
+                }
+            })
             .attr("text-anchor", "middle")
             .style("font-family", "Impact")
             .attr("transform", function(d) {
@@ -81,6 +90,7 @@ class WordCloud{
             })
             .text(function(d) { return d.text; });
         }
+        //console.log(words)
     }
     updateVis() {
         let vis = this;

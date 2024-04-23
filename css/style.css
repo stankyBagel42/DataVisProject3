@@ -3,12 +3,31 @@
 }
 
 .header {
-  background-color: #49970e;
+  position: relative;
+  background-image: url('../images/shera-banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 25px;
-  padding: 10px;
+  padding: 40px;
   text-align: center;
   font-size: 20px;
+  z-index: -2;
 }
+
+.header::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.785);
+  z-index: -1;
+}
+
 .header p {
   margin: 10px;
 }
@@ -35,17 +54,19 @@
 }
 
 #tooltip {
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 3px;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
 }
 
 #chordDiagram {
   width: 800px;
   height: 800px;
 }
-.container {  display: grid;
+
+.container {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: min-content min-content min-content;
   gap: 0px 0px;
@@ -56,7 +77,8 @@
     "chordChart chordChart chordChart chordChart";
 }
 
-.characterFilters {  display: grid;
+.characterFilters {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 15% 1fr;
   gap: 0px 0px;
@@ -68,11 +90,16 @@
   border: groove;
 }
 
-.episodeLines { grid-area: episodeLines; }
+.episodeLines {
+  grid-area: episodeLines;
+}
 
-.wordCloud { grid-area: wordCloud; }
+.wordCloud {
+  grid-area: wordCloud;
+}
 
-.seasonFilters {  display: grid;
+.seasonFilters {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
@@ -80,20 +107,26 @@
   grid-template-areas:
     "seasonLines seasonLines seasonEpisodes seasonEpisodes";
   grid-area: seasonFilters;
-  border:groove
+  border: groove
 }
 
-.seasonLines { grid-area: seasonLines; }
+.seasonLines {
+  grid-area: seasonLines;
+}
 
-.seasonEpisodes { grid-area: seasonEpisodes; }
+.seasonEpisodes {
+  grid-area: seasonEpisodes;
+}
 
-.chordChart { grid-area: chordChart; 
-justify-self: center;
+.chordChart {
+  grid-area: chordChart;
+  justify-self: center;
 }
 
 .checkbox-label {
   display: inline-block;
-  margin-right: 10px; /* Adjust the spacing between checkboxes */
+  margin-right: 10px;
+  /* Adjust the spacing between checkboxes */
 }
 
 .collapsible {
@@ -108,7 +141,8 @@ justify-self: center;
   font-size: 15px;
 }
 
-.active, .collapsible:hover {
+.active,
+.collapsible:hover {
   background-color: #555;
 }
 
