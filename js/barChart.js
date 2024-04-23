@@ -95,9 +95,13 @@ class Barchart{
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
                     .html(tooltipContent);
+                d3.select(event.currentTarget)
+                    .style("fill", "#49970e");
             })
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
+                d3.select(event.currentTarget)
+                    .style("fill", "steelblue");
             });
         }
         else{
@@ -122,9 +126,13 @@ class Barchart{
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px')
                     .html(tooltipContent);
+                d3.select(event.currentTarget)
+                    .style("fill", "#49970e");
             })
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
+                d3.select(event.currentTarget)
+                    .style("fill", "steelblue");
             });
         }
 

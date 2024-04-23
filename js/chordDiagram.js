@@ -118,7 +118,7 @@ class ChordDiagram{
                         .style('top', (event.pageY + 10) + 'px')
                         .html(tooltipContent);
                     d3.select(event.currentTarget)
-                        .style("fill", "green");
+                        .style("fill", "#49970e");
                 })
                 .on('mouseleave', function () {
                     d3.select('#tooltip').style('opacity', 0);
