@@ -107,7 +107,7 @@ class Barchart{
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
                 d3.select(event.currentTarget)
-                    .style("fill", "steelblue");
+                    .style("fill", "#69b3a2");
             });
         }
         else{
@@ -145,7 +145,14 @@ class Barchart{
             .on('mouseleave', function () {
                 d3.select('#tooltip').style('opacity', 0);
                 d3.select(event.currentTarget)
-                    .style("fill", "steelblue");
+                .style('fill', function(d) {
+                    let colorScaleDomain = colorScale.domain();
+                    if (colorScaleDomain.includes(d.character)) {
+                        return colorScale(d.character);
+                    } else {
+                        return '#69b3a2';
+                    }
+                })
             });
         }
 
